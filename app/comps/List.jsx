@@ -16,8 +16,9 @@ class List extends React.Component {
   }
 
   add(text) {
-    axios.post("/getNotes", {note: text}).then(res => {
-      this.state.datas.push(res.datas);
+    axios.post("/add", {note: text})
+    .then(res => {
+      this.state.datas.push(res.data);
       this.setState({datas: this.state.datas});
     });
   }
@@ -28,6 +29,10 @@ class List extends React.Component {
   }
 
   del(index) {
+    axios.post("/delete", {idDelete: index})
+    .then(res => {
+      
+    });
     this.state.datas.splice(index, 1);
     this.setState(this.state);
   }
@@ -46,7 +51,8 @@ class List extends React.Component {
   componentDidMount() {
     axios.post("/getNotes")
     .then(res => {
-      let data = res.data;
+      var data = res.data;
+      console.log(res.data);
       this.setState({
         datas: data,
         process: true

@@ -8,6 +8,7 @@ app.use(express.static('public'));
 app.listen(3200, function() {
   console.log('Server started');
 });
+app.use(bodyParser.json());
 
 var datas = ["Android", "NodeJS", "ReactJS", "ES6", "PHP"];
 
@@ -22,7 +23,7 @@ app.post('/getNotes', function(req, res) {
 app.post('/add', parser, function(req, res){
 	var newNote = req.body.note;
 	datas.push(newNote);
-	res.send(datas);
+	res.send(newNote);
 });
 
 // app.post('/delete', parser, function(req, res){

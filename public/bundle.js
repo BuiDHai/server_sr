@@ -21966,8 +21966,8 @@ var List = function (_React$Component) {
     value: function add(text) {
       var _this2 = this;
 
-      _axios2.default.post("/getNotes", { note: text }).then(function (res) {
-        _this2.state.datas.push(res.datas);
+      _axios2.default.post("/add", { note: text }).then(function (res) {
+        _this2.state.datas.push(res.data);
         _this2.setState({ datas: _this2.state.datas });
       });
     }
@@ -21980,6 +21980,7 @@ var List = function (_React$Component) {
   }, {
     key: 'del',
     value: function del(index) {
+      _axios2.default.post("/delete", { idDelete: index }).then(function (res) {});
       this.state.datas.splice(index, 1);
       this.setState(this.state);
     }
@@ -22008,6 +22009,7 @@ var List = function (_React$Component) {
 
       _axios2.default.post("/getNotes").then(function (res) {
         var data = res.data;
+        console.log(res.data);
         _this4.setState({
           datas: data,
           process: true
