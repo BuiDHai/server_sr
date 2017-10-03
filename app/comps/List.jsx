@@ -6,7 +6,7 @@ class List extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      mang: ["Android", "NodeJS", "ReactJS", "ES6"]
+      mang: ["Android", "NodeJS", "ReactJS", "ES6", "PHP"]
     }
 
     this.add = this.add.bind(this);
