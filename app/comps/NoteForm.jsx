@@ -19,9 +19,7 @@ class NoteForm extends React.Component {
   render() {
     return (
       <div>
-        <input type="text" ref="txt" placeholder="Enter your note..." />
-        <br/>
-        <button onClick={this.add}>Add Item</button>
+        <input type="text" ref="txt" placeholder="Enter your note..." /> <button onClick={this.add}>Add Item</button>
       </div>
     );
   }

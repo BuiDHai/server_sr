@@ -1,12 +1,13 @@
 import React from 'react';
 import Note from './Note.jsx';
 import NoteForm from './NoteForm.jsx';
+import axios from 'axios';
 
 class List extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      mang: ["Android", "NodeJS", "ReactJS", "ES6", "PHP"]
+      datas: []
     }
 
     this.add = this.add.bind(this);
@@ -15,17 +16,19 @@ class List extends React.Component {
   }
 
   add(text) {
-    this.state.mang.push(text);
-    this.setState(this.state);
+    axios.post("/getNotes", {note: text}).then(res => {
+      this.state.datas.push(res.datas);
+      this.setState({datas: this.state.datas});
+    });
   }
 
   save(index, text) {
-    this.state.mang.splice(index, 1, text);
+    this.state.datas.splice(index, 1, text);
     this.setState(this.state);
   }
 
   del(index) {
-    this.state.mang.splice(index, 1);
+    this.state.datas.splice(index, 1);
     this.setState(this.state);
   }
 
@@ -33,11 +36,22 @@ class List extends React.Component {
     return (
       <div>
         <NoteForm addNote={this.add} />
-        {this.state.mang.map((e, index) => {
+        {this.state.datas.map((e, index) => {
           return <Note key={index} saveUpdate={this.save} remove={this.del} index={index}>{e}</Note>
         })}
       </div>
     );
+  }
+
+  componentDidMount() {
+    axios.post("/getNotes")
+    .then(res => {
+      let data = res.data;
+      this.setState({
+        datas: data,
+        process: true
+      });
+    });
   }
 }
 
