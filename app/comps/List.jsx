@@ -7,7 +7,7 @@ class List extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      datas: []
+      data: []
     }
 
     this.add = this.add.bind(this);
@@ -16,32 +16,30 @@ class List extends React.Component {
   }
 
   add(text) {
-    axios.post("/add", {note: text})
-    .then(res => {
-      this.state.datas.push(res.data);
-      this.setState({datas: this.state.datas});
+    axios.post("/add", {note: text}).then(res => {
+      this.state.data = res.data;
+      this.setState({data: this.state.data});
     });
   }
 
   save(index, text) {
-    this.state.datas.splice(index, 1, text);
+    this.state.data.splice(index, 1, text);
     this.setState(this.state);
   }
 
   del(index) {
     axios.post("/delete", {idDelete: index})
     .then(res => {
-      
+      this.state.data = res.data;
+      this.setState({data: this.state.data});
     });
-    this.state.datas.splice(index, 1);
-    this.setState(this.state);
   }
 
   render() {
     return (
       <div>
         <NoteForm addNote={this.add} />
-        {this.state.datas.map((e, index) => {
+        {this.state.data.map((e, index) => {
           return <Note key={index} saveUpdate={this.save} remove={this.del} index={index}>{e}</Note>
         })}
       </div>
@@ -51,10 +49,9 @@ class List extends React.Component {
   componentDidMount() {
     axios.post("/getNotes")
     .then(res => {
-      var data = res.data;
-      console.log(res.data);
+      let data = res.data;
       this.setState({
-        datas: data,
+        data: data,
         process: true
       });
     });

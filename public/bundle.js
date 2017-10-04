@@ -21952,7 +21952,7 @@ var List = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (List.__proto__ || Object.getPrototypeOf(List)).call(this, props));
 
     _this.state = {
-      datas: []
+      data: []
     };
 
     _this.add = _this.add.bind(_this);
@@ -21967,36 +21967,39 @@ var List = function (_React$Component) {
       var _this2 = this;
 
       _axios2.default.post("/add", { note: text }).then(function (res) {
-        _this2.state.datas.push(res.data);
-        _this2.setState({ datas: _this2.state.datas });
+        _this2.state.data = res.data;
+        _this2.setState({ data: _this2.state.data });
       });
     }
   }, {
     key: 'save',
     value: function save(index, text) {
-      this.state.datas.splice(index, 1, text);
+      this.state.data.splice(index, 1, text);
       this.setState(this.state);
     }
   }, {
     key: 'del',
     value: function del(index) {
-      _axios2.default.post("/delete", { idDelete: index }).then(function (res) {});
-      this.state.datas.splice(index, 1);
-      this.setState(this.state);
+      var _this3 = this;
+
+      _axios2.default.post("/delete", { idDelete: index }).then(function (res) {
+        _this3.state.data = res.data;
+        _this3.setState({ data: _this3.state.data });
+      });
     }
   }, {
     key: 'render',
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       return _react2.default.createElement(
         'div',
         null,
         _react2.default.createElement(_NoteForm2.default, { addNote: this.add }),
-        this.state.datas.map(function (e, index) {
+        this.state.data.map(function (e, index) {
           return _react2.default.createElement(
             _Note2.default,
-            { key: index, saveUpdate: _this3.save, remove: _this3.del, index: index },
+            { key: index, saveUpdate: _this4.save, remove: _this4.del, index: index },
             e
           );
         })
@@ -22005,13 +22008,12 @@ var List = function (_React$Component) {
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
-      var _this4 = this;
+      var _this5 = this;
 
       _axios2.default.post("/getNotes").then(function (res) {
         var data = res.data;
-        console.log(res.data);
-        _this4.setState({
-          datas: data,
+        _this5.setState({
+          data: data,
           process: true
         });
       });

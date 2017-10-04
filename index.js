@@ -10,27 +10,27 @@ app.listen(3200, function() {
 });
 app.use(bodyParser.json());
 
-var datas = ["Android", "NodeJS", "ReactJS", "ES6", "PHP"];
+var data = ["Android", "NodeJS", "ReactJS", "ES6", "PHP"];
 
 app.get('/', function(req, res) {
   res.render('index');
 });
 
 app.post('/getNotes', function(req, res) {
-  res.send(datas);
+  res.send(data);
 });
 
 app.post('/add', parser, function(req, res){
 	var newNote = req.body.note;
-	datas.push(newNote);
-	res.send(newNote);
+	data.push(newNote);
+	res.send(data);
 });
 
-// app.post('/delete', parser, function(req, res){
-// 	var id = req.body.idDelete;
-// 	data.splice(id, 1);
-// 	res.send(data);
-// });
+app.post('/delete', parser, function(req, res){
+	var id = req.body.idDelete;
+	data.splice(id, 1);
+	res.send(data);
+});
 //
 // app.post('/update', parser, function(req, res){
 // 	var id = req.body.idEdit;
